@@ -18,9 +18,13 @@ type Config = {
   }
 }
 
-const loadConfig = (): Config => {
+const loadConfig = (configFile?: string): Config => {
+  const configPath = configFile
+    ? path.resolve(configFile)
+    : path.resolve(`./.tgen/.config`)
+
   try {
-    const configRaw = fs.readFileSync(path.resolve(`./.tgen/.config`))
+    const configRaw = fs.readFileSync(configPath)
     return JSON.parse(configRaw.toString())
   } catch {
     throw new Error('Could not load .config.')

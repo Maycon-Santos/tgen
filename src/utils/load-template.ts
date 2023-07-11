@@ -5,9 +5,12 @@ type Template = {
   [filename: string]: string
 }
 
-const loadTemplate = (templateName: string): Template => {
+const loadTemplate = (templateName: string, configFile?: string): Template => {
+  const configDir = path.dirname(
+    configFile ? path.resolve(configFile) : path.resolve(`./.tgen/.config`),
+  )
   const template: Template = {}
-  const templateDir = path.resolve(`./.tgen/${templateName}`)
+  const templateDir = path.join(configDir, templateName)
 
   function run(dir: string) {
     const files = fs.readdirSync(dir)

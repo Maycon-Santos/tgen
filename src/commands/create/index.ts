@@ -13,6 +13,11 @@ export default class Create extends Command {
         'Directory where the pattern will be inserted. The default is the root defined in the configuration file.',
       required: false,
     }),
+    config: Flags.string({
+      chat: 'c',
+      description: '',
+      required: false,
+    }),
   }
 
   static args = {
@@ -31,9 +36,9 @@ export default class Create extends Command {
 
   async run(): Promise<void> {
     const { args, flags } = await this.parse(Create)
-    const config = loadConfig()
+    const config = loadConfig(flags.config)
     const command = config.patterns[args.pattern]
-    const template = loadTemplate(command.template)
+    const template = loadTemplate(command.template, flags.config)
     const filesToWrite: { [k: string]: string } = {}
 
     for (const filename of Object.keys(template)) {
