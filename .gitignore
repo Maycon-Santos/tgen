@@ -9,3 +9,5 @@
 /tmp
 node_modules
 oclif.manifest.json
+
+generated_files

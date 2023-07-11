@@ -23,7 +23,7 @@ const loadConfig = (): Config => {
     const configRaw = fs.readFileSync(path.resolve(`./.tgen/.config`))
     return JSON.parse(configRaw.toString())
   } catch {
-    throw new Error('Could not load .config')
+    throw new Error('Could not load .config.')
   }
 }
 
