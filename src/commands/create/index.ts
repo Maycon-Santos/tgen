@@ -9,19 +9,23 @@ export default class Create extends Command {
   static flags = {
     name: Flags.string({
       char: 'n',
-      description: '',
+      description: 'Name of the files to be generated.',
       required: true,
     }),
     dir: Flags.string({
       char: 'd',
-      description: '',
+      description:
+        'Directory where the pattern will be inserted. The default is the root defined in the configuration file.',
       required: false,
     }),
   }
 
   static args = {
-    space: Args.string({
-      description: 'Space to generate',
+    pattern: Args.string({
+      get description() {
+        const config = loadConfig()
+        return `Available: ${Object.keys(config.patterns).join(', ')}`
+      },
       required: true,
     }),
   }
@@ -29,7 +33,7 @@ export default class Create extends Command {
   async run(): Promise<void> {
     const { args, flags } = await this.parse(Create)
     const config = loadConfig()
-    const command = config.commands[args.space]
+    const command = config.patterns[args.pattern]
     const template = loadTemplate(command.template)
     const filesToWrite: { [k: string]: string } = {}
 

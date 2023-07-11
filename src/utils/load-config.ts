@@ -3,7 +3,7 @@ import fs = require('fs')
 import { CaseStyle } from './case-style'
 
 type Config = {
-  commands: {
+  patterns: {
     [k: string]: {
       dir: string
       caseStyle?: CaseStyle
