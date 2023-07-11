@@ -7,11 +7,6 @@ import fs = require('fs')
 
 export default class Create extends Command {
   static flags = {
-    name: Flags.string({
-      char: 'n',
-      description: 'Name of the files to be generated.',
-      required: true,
-    }),
     dir: Flags.string({
       char: 'd',
       description:
@@ -28,6 +23,10 @@ export default class Create extends Command {
       },
       required: true,
     }),
+    name: Args.string({
+      description: 'Name of the files to be generated.',
+      required: true,
+    }),
   }
 
   async run(): Promise<void> {
@@ -41,15 +40,15 @@ export default class Create extends Command {
       const fileContent = template[filename]
       const pathToWrite = path
         .join(path.resolve(command.dir), flags.dir || '', filename)
-        .replaceAll('[name]', path.basename(flags.name))
+        .replaceAll('[name]', path.basename(args.name))
 
       if (fs.existsSync(pathToWrite)) {
         throw new Error(`File ${pathToWrite} already exists.`)
       }
 
-      if (!/^[\w .-]+$/.test(flags.name)) {
+      if (!/^[\w .-]+$/.test(args.name)) {
         throw new Error(
-          `File name is invalid (${flags.name}). It can only contain letters, digits, underscores, hyphens, periods and spaces.`,
+          `File name is invalid (${args.name}). It can only contain letters, digits, underscores, hyphens, periods and spaces.`,
         )
       }
 
@@ -64,9 +63,9 @@ export default class Create extends Command {
         } = replaceInFile
 
         const caseStyle =
-          caseStyleRaw || command.caseStyle || getCaseStyle(flags.name)
+          caseStyleRaw || command.caseStyle || getCaseStyle(args.name)
         const to = toCaseStyle(
-          toRaw.replaceAll('[name]', path.basename(flags.name)),
+          toRaw.replaceAll('[name]', path.basename(args.name)),
           caseStyle,
         )
 
