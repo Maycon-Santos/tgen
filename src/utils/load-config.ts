@@ -2,18 +2,20 @@ import path = require('path')
 import fs = require('fs')
 import { CaseStyle } from './case-style'
 
-type Config = {
+export type Config = {
   patterns: {
     [k: string]: {
       dir: string
       caseStyle?: CaseStyle
       template: string
-      replaceInFile: {
-        regexp?: boolean
-        caseStyle?: CaseStyle
-        from: string
-        to: string
-      }[]
+      replace: [
+        {
+          caseStyle?: CaseStyle
+          from?: string
+          fromRegexp?: [string, string]
+          to: string
+        },
+      ]
     }
   }
 }

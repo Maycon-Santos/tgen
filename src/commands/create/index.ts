@@ -22,10 +22,7 @@ export default class Create extends Command {
 
   static args = {
     pattern: Args.string({
-      get description() {
-        const config = loadConfig()
-        return `Available: ${Object.keys(config.patterns).join(', ')}`
-      },
+      description: '',
       required: true,
     }),
     name: Args.string({
@@ -37,15 +34,18 @@ export default class Create extends Command {
   async run(): Promise<void> {
     const { args, flags } = await this.parse(Create)
     const config = loadConfig(flags.config)
-    const command = config.patterns[args.pattern]
-    const template = loadTemplate(command.template, flags.config)
+    const pattern = config.patterns[args.pattern]
+    const template = loadTemplate(pattern.template, flags.config)
     const filesToWrite: { [k: string]: string } = {}
 
     for (const filename of Object.keys(template)) {
       const fileContent = template[filename]
       const pathToWrite = path
-        .join(path.resolve(command.dir), flags.dir || '', filename)
-        .replaceAll('[name]', path.basename(args.name))
+        .join(path.resolve(pattern.dir), flags.dir || '', filename)
+        .replaceAll(
+          '[name]',
+          toCaseStyle(path.basename(args.name), pattern.caseStyle),
+        )
 
       if (fs.existsSync(pathToWrite)) {
         throw new Error(`File ${pathToWrite} already exists.`)
@@ -59,30 +59,33 @@ export default class Create extends Command {
 
       filesToWrite[pathToWrite] = fileContent
 
-      for (const replaceInFile of command.replaceInFile) {
-        const {
-          from,
-          to: toRaw,
-          caseStyle: caseStyleRaw,
-          regexp,
-        } = replaceInFile
+      for (const replace of pattern.replace) {
+        const { from, to: toRaw, caseStyle: caseStyleRaw, fromRegexp } = replace
 
-        const caseStyle =
-          caseStyleRaw || command.caseStyle || getCaseStyle(args.name)
+        const caseStyle = caseStyleRaw || getCaseStyle(args.name)
         const to = toCaseStyle(
           toRaw.replaceAll('[name]', path.basename(args.name)),
           caseStyle,
         )
 
-        if (regexp) {
-          template[filename] = fileContent.replace(new RegExp(from), to)
+        if (fromRegexp) {
+          filesToWrite[pathToWrite] = filesToWrite[pathToWrite].replace(
+            new RegExp(...fromRegexp),
+            to,
+          )
+
           continue
         }
 
-        template[filename] = fileContent.replaceAll(from, to)
-      }
+        if (!from) {
+          throw new Error('key `from` or `fromRegexp` not found.')
+        }
 
-      filesToWrite[pathToWrite] = template[filename]
+        filesToWrite[pathToWrite] = filesToWrite[pathToWrite].replaceAll(
+          from,
+          to,
+        )
+      }
     }
 
     for (const pathToWrite of Object.keys(filesToWrite)) {
