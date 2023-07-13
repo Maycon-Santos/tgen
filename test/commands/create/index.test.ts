@@ -115,7 +115,7 @@ describe('create', () => {
     .it('should replace text', () => {
       expect(
         fs.readFileSync(path.resolve('./test/tmp/.txt')).toString(),
-      ).contain('MenuItemReplaced or regex-replacement and regex-replacement')
+      ).contain('NameTestReplaced or regex-replacement and regex-replacement')
     })
 
   test
@@ -128,7 +128,7 @@ describe('create', () => {
       'test/commands/create/.tgen/.config',
     ])
     .catch((error) => {
-      expect(error.message).equal('key `from` or `fromRegexp` not found.')
+      expect(error.message).to.equal('key `from` or `fromRegexp` not found.')
     })
     .it(
       'shows an error when trying to generate a file with replace missing key `from` or `fromRegexp`',

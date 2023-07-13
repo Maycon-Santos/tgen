@@ -1,25 +1,19 @@
 export type CaseStyle = 'camel' | 'pascal' | 'kebab' | 'snake'
 
-export function toCaseStyle(value: string, caseStyle?: CaseStyle): string {
+export function toCaseStyle(value: string, caseStyle: CaseStyle): string {
   const fragments = toKebabStyle(value).split('-')
-
-  if (!caseStyle) {
-    return value
-  }
 
   switch (caseStyle) {
     case 'camel':
       return fragments
-        .map((fragment, index) =>
-          index > 0 ? capitalize(fragment) : fragment.toLowerCase(),
-        )
+        .map((fragment, index) => (index > 0 ? capitalize(fragment) : fragment))
         .join('')
     case 'pascal':
       return fragments.map((fragment) => capitalize(fragment)).join('')
     case 'snake':
-      return fragments.join('_').toLowerCase()
+      return fragments.join('_')
     default:
-      return fragments.join('-').toLowerCase()
+      return fragments.join('-')
   }
 }
 
@@ -36,26 +30,23 @@ export function getCaseStyle(value: string): CaseStyle {
     case isPascal(value):
       return 'pascal'
     case isCamel(value):
-      return 'camel'
     default:
-      return 'kebab'
+      return 'camel'
   }
 }
 
-function toKebabStyle(value: string): string {
-  switch (true) {
-    case isSnake(value):
-      return value.replaceAll('_', '-')
-    case isPascal(value):
-    case isCamel(value):
-      return value.replace(
-        /[A-Z]+(?![a-z])|[A-Z]/g,
-        ($, ofs) => (ofs ? '-' : '') + $,
-      )
-    case isKebab(value):
-    default:
-      return value
+export function toKebabStyle(value: string): string {
+  if (isSnake(value)) {
+    return value.replaceAll('_', '-').toLowerCase()
   }
+
+  if (isPascal(value) || isCamel(value)) {
+    return value
+      .replace(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? '-' : '') + $)
+      .toLowerCase()
+  }
+
+  return value.toLowerCase()
 }
 
 function isCamel(value: string): boolean {

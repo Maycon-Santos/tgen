@@ -29,7 +29,9 @@ const loadConfig = (configFile?: string): Config => {
     const configRaw = fs.readFileSync(configPath)
     return JSON.parse(configRaw.toString())
   } catch {
-    throw new Error('Could not load .config.')
+    throw new Error(
+      `Could not load config file. The file ${configFile} does not exist`,
+    )
   }
 }
 

@@ -44,7 +44,9 @@ export default class Create extends Command {
         .join(path.resolve(pattern.dir), flags.dir || '', filename)
         .replaceAll(
           '[name]',
-          toCaseStyle(path.basename(args.name), pattern.caseStyle),
+          pattern.caseStyle
+            ? toCaseStyle(path.basename(args.name), pattern.caseStyle)
+            : path.basename(args.name),
         )
 
       if (fs.existsSync(pathToWrite)) {
