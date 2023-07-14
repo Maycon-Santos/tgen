@@ -2,23 +2,26 @@ import { expect, test } from '@oclif/test'
 import * as path from 'node:path'
 import * as fs from 'node:fs'
 
+const cwd = process.cwd()
+const configPath = path.resolve('test/commands/create/.tgen/.config')
+
 describe('create', () => {
   beforeEach(() => {
-    if (fs.existsSync('./test/tmp')) {
+    if (fs.existsSync(path.resolve('./test/tmp'))) {
       fs.rmSync(path.resolve('./test/tmp'), { recursive: true })
     }
   })
 
+  afterEach(() => {
+    process.chdir(cwd)
+  })
+
   test
     .stdout()
-    .command([
-      'create',
-      'template-1',
-      'name-test',
-      '--config',
-      'test/commands/create/.tgen/.config',
-    ])
+    .command(['create', 'template-1', 'name-test', '--config', configPath])
     .it('generate template-1', () => {
+      process.chdir(cwd)
+
       expect(fs.existsSync(path.resolve('./test/tmp/name-test/name-test.js')))
         .to.be.true
       expect(
@@ -42,9 +45,11 @@ describe('create', () => {
       '-d',
       'dir-test',
       '--config',
-      'test/commands/create/.tgen/.config',
+      configPath,
     ])
     .it('Generate template-1 in dir-test directory', () => {
+      process.chdir(cwd)
+
       expect(
         fs.existsSync(
           path.resolve('./test/tmp/dir-test/name-test/name-test.js'),
@@ -67,20 +72,8 @@ describe('create', () => {
 
   test
     .stdout()
-    .command([
-      'create',
-      'template-1',
-      'name-test',
-      '--config',
-      'test/commands/create/.tgen/.config',
-    ])
-    .command([
-      'create',
-      'template-1',
-      'name-test',
-      '--config',
-      'test/commands/create/.tgen/.config',
-    ])
+    .command(['create', 'template-1', 'name-test', '--config', configPath])
+    .command(['create', 'template-1', 'name-test', '--config', configPath])
     .catch((error) => {
       expect(error.message).to.contain('File')
       expect(error.message).to.contain('already exists.')
@@ -89,13 +82,7 @@ describe('create', () => {
 
   test
     .stdout()
-    .command([
-      'create',
-      'template-1',
-      'name/@test',
-      '--config',
-      'test/commands/create/.tgen/.config',
-    ])
+    .command(['create', 'template-1', 'name/@test', '--config', configPath])
     .catch((error) => {
       expect(error.message).to.contain(
         'File name is invalid (name/@test). It can only contain letters, digits, underscores, hyphens, periods and spaces.',
@@ -105,14 +92,10 @@ describe('create', () => {
 
   test
     .stdout()
-    .command([
-      'create',
-      'template-2',
-      'name-test',
-      '--config',
-      'test/commands/create/.tgen/.config',
-    ])
+    .command(['create', 'template-2', 'name-test', '--config', configPath])
     .it('should replace text', () => {
+      process.chdir(cwd)
+
       expect(
         fs.readFileSync(path.resolve('./test/tmp/.txt')).toString(),
       ).contain('NameTestReplaced or regex-replacement and regex-replacement')
@@ -120,13 +103,7 @@ describe('create', () => {
 
   test
     .stdout()
-    .command([
-      'create',
-      'template-3',
-      'name-test',
-      '--config',
-      'test/commands/create/.tgen/.config',
-    ])
+    .command(['create', 'template-3', 'name-test', '--config', configPath])
     .catch((error) => {
       expect(error.message).to.equal('key `from` or `fromRegexp` not found.')
     })

@@ -1,12 +1,13 @@
 import { assert } from 'chai'
 import { expect } from '@oclif/test'
-import loadConfig from '../../src/utils/load-config'
+import * as path from 'node:path'
+import loadConfig from '../../src/utils/config'
 
-describe('utils - load-config', () => {
+describe('utils - config', () => {
   it('load config file', () => {
-    expect(typeof loadConfig('test/commands/create/.tgen/.config')).to.equal(
-      'object',
-    )
+    expect(
+      typeof loadConfig(path.resolve('test/commands/create/.tgen/.config')),
+    ).to.equal('object')
   })
 
   it('shows an error when the config path does not exist', () => {

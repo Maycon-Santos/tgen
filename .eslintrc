@@ -3,5 +3,8 @@
     "oclif",
     "oclif-typescript",
     "prettier"
-  ]
+  ],
+  "rules": {
+    "no-console": "error"
+  }
 }

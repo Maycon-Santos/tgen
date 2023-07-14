@@ -1,6 +1,6 @@
 import { Args, Command, Flags } from '@oclif/core'
-import loadConfig from '../../utils/load-config'
-import loadTemplate from '../../utils/load-template'
+import loadConfig, { Pattern } from '../../utils/config'
+import loadTemplate from '../../utils/template'
 import { getCaseStyle, toCaseStyle } from '../../utils/case-style'
 import path = require('path')
 import fs = require('fs')
@@ -31,23 +31,47 @@ export default class Create extends Command {
     }),
   }
 
+  private makeReplaces(pattern: Pattern, name: string, content: string) {
+    let contentWithReplacements = content
+
+    for (const replace of pattern.replace) {
+      const { from, to: toRaw, caseStyle: caseStyleRaw, fromRegexp } = replace
+      const caseStyle = caseStyleRaw || getCaseStyle(name)
+      const to = toCaseStyle(
+        toRaw.replaceAll('[name]', path.basename(name)),
+        caseStyle,
+      )
+
+      content
+
+      if (fromRegexp) {
+        contentWithReplacements = contentWithReplacements.replace(
+          new RegExp(...fromRegexp),
+          to,
+        )
+        continue
+      }
+
+      if (!from) {
+        throw new Error('key `from` or `fromRegexp` not found.')
+      }
+
+      contentWithReplacements = contentWithReplacements.replaceAll(from, to)
+    }
+
+    return contentWithReplacements
+  }
+
   async run(): Promise<void> {
     const { args, flags } = await this.parse(Create)
     const config = loadConfig(flags.config)
     const pattern = config.patterns[args.pattern]
-    const template = loadTemplate(pattern.template, flags.config)
+    const template = loadTemplate(pattern, args.name, config.root, flags.dir)
+
     const filesToWrite: { [k: string]: string } = {}
 
-    for (const filename of Object.keys(template)) {
-      const fileContent = template[filename]
-      const pathToWrite = path
-        .join(path.resolve(pattern.dir), flags.dir || '', filename)
-        .replaceAll(
-          '[name]',
-          pattern.caseStyle
-            ? toCaseStyle(path.basename(args.name), pattern.caseStyle)
-            : path.basename(args.name),
-        )
+    for (const pathToWrite of Object.keys(template)) {
+      const fileContent = template[pathToWrite]
 
       if (fs.existsSync(pathToWrite)) {
         throw new Error(`File ${pathToWrite} already exists.`)
@@ -59,35 +83,11 @@ export default class Create extends Command {
         )
       }
 
-      filesToWrite[pathToWrite] = fileContent
-
-      for (const replace of pattern.replace) {
-        const { from, to: toRaw, caseStyle: caseStyleRaw, fromRegexp } = replace
-
-        const caseStyle = caseStyleRaw || getCaseStyle(args.name)
-        const to = toCaseStyle(
-          toRaw.replaceAll('[name]', path.basename(args.name)),
-          caseStyle,
-        )
-
-        if (fromRegexp) {
-          filesToWrite[pathToWrite] = filesToWrite[pathToWrite].replace(
-            new RegExp(...fromRegexp),
-            to,
-          )
-
-          continue
-        }
-
-        if (!from) {
-          throw new Error('key `from` or `fromRegexp` not found.')
-        }
-
-        filesToWrite[pathToWrite] = filesToWrite[pathToWrite].replaceAll(
-          from,
-          to,
-        )
-      }
+      filesToWrite[pathToWrite] = this.makeReplaces(
+        pattern,
+        args.name,
+        fileContent,
+      )
     }
 
     for (const pathToWrite of Object.keys(filesToWrite)) {
