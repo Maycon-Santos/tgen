@@ -1,7 +1,7 @@
 import path = require('path')
 import fs = require('fs')
 import { Args, Command, Flags } from '@oclif/core'
-import loadConfig, { Pattern } from '../../utils/config'
+import config, { Pattern } from '../../utils/config'
 import loadTemplate from '../../utils/template'
 import { getCaseStyle, toCaseStyle } from '../../utils/case-style'
 import log from '../../utils/log'
@@ -12,11 +12,6 @@ export default class Create extends Command {
       char: 'd',
       description:
         'Directory where the pattern will be inserted. The default is the root defined in the configuration file.',
-      required: false,
-    }),
-    config: Flags.string({
-      chat: 'c',
-      description: '',
       required: false,
     }),
   }
@@ -70,7 +65,6 @@ export default class Create extends Command {
 
   async run(): Promise<void> {
     const { args, flags } = await this.parse(Create)
-    const config = loadConfig(flags.config)
     const pattern = config.patterns[args.pattern]
     const template = loadTemplate(pattern, args.name, config.root, flags.dir)
 

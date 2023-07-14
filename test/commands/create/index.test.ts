@@ -2,7 +2,6 @@ import { expect, test } from '@oclif/test'
 import * as path from 'node:path'
 import * as fs from 'node:fs'
 
-const cwd = process.cwd()
 const configPath = path.resolve('test/commands/create/.tgen/.config')
 
 describe('create', () => {
@@ -12,16 +11,10 @@ describe('create', () => {
     }
   })
 
-  afterEach(() => {
-    process.chdir(cwd)
-  })
-
   test
     .stdout()
     .command(['create', 'template-1', 'name-test', '--config', configPath])
     .it('generate template-1', () => {
-      process.chdir(cwd)
-
       expect(fs.existsSync(path.resolve('./test/tmp/name-test/name-test.js')))
         .to.be.true
       expect(
@@ -48,8 +41,6 @@ describe('create', () => {
       configPath,
     ])
     .it('Generate template-1 in dir-test directory', () => {
-      process.chdir(cwd)
-
       expect(
         fs.existsSync(
           path.resolve('./test/tmp/dir-test/name-test/name-test.js'),
@@ -94,8 +85,6 @@ describe('create', () => {
     .stdout()
     .command(['create', 'template-2', 'name-test', '--config', configPath])
     .it('should replace text', () => {
-      process.chdir(cwd)
-
       expect(
         fs.readFileSync(path.resolve('./test/tmp/.txt')).toString(),
       ).contain('NameTestReplaced or regex-replacement and regex-replacement')

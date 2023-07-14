@@ -61,6 +61,10 @@
     "bin": "tgen",
     "dirname": "tgen",
     "commands": "./dist/commands",
+    "hooks": {
+      "prerun": "./dist/hooks/prerun.js",
+      "postrun": "./dist/hooks/postrun.js"
+    },
     "plugins": [
       "@oclif/plugin-help",
       "@oclif/plugin-plugins"

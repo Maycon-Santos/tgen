@@ -24,7 +24,12 @@ export type Config = {
   }
 }
 
-const loadConfig = (configFile?: string): Config => {
+const cwd = process.cwd()
+const config: Config = {
+  patterns: {},
+}
+
+export const loadConfig = (configFile?: string): void => {
   const configPath = configFile
     ? path.resolve(configFile)
     : path.resolve(`./.tgen/.config`)
@@ -39,7 +44,11 @@ const loadConfig = (configFile?: string): Config => {
 
   process.chdir(path.dirname(configPath))
 
-  return JSON.parse(configRaw.toString())
+  Object.assign(config, JSON.parse(configRaw.toString()))
 }
 
-export default loadConfig
+export const exitConfig = (): void => {
+  process.chdir(cwd)
+}
+
+export default config
