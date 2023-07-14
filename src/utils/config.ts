@@ -1,6 +1,7 @@
 import path = require('path')
 import fs = require('fs')
 import { CaseStyle } from './case-style'
+import log from './log'
 
 export type Pattern = {
   dir: string
@@ -29,7 +30,7 @@ const loadConfig = (configFile?: string): Config => {
     : path.resolve(`./.tgen/.config`)
 
   if (!fs.existsSync(configPath)) {
-    throw new Error(
+    log.error(
       `Could not load config file. The file ${configPath} does not exist`,
     )
   }

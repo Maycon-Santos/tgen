@@ -105,9 +105,11 @@ describe('create', () => {
     .stdout()
     .command(['create', 'template-3', 'name-test', '--config', configPath])
     .catch((error) => {
-      expect(error.message).to.equal('key `from` or `fromRegexp` not found.')
+      expect(error.message).to.equal(
+        'key `from`, `fromRegexp` or `to` not found in template replace.',
+      )
     })
     .it(
-      'shows an error when trying to generate a file with replace missing key `from` or `fromRegexp`',
+      'shows an error when trying to generate a file with replace missing key `from`, `fromRegexp` or `to`',
     )
 })

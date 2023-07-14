@@ -1,9 +1,10 @@
+import path = require('path')
+import fs = require('fs')
 import { Args, Command, Flags } from '@oclif/core'
 import loadConfig, { Pattern } from '../../utils/config'
 import loadTemplate from '../../utils/template'
 import { getCaseStyle, toCaseStyle } from '../../utils/case-style'
-import path = require('path')
-import fs = require('fs')
+import log from '../../utils/log'
 
 export default class Create extends Command {
   static flags = {
@@ -31,7 +32,11 @@ export default class Create extends Command {
     }),
   }
 
-  private makeReplaces(pattern: Pattern, name: string, content: string) {
+  private makeReplaces(
+    pattern: Pattern,
+    name: string,
+    content: string,
+  ): string {
     let contentWithReplacements = content
 
     for (const replace of pattern.replace) {
@@ -42,9 +47,7 @@ export default class Create extends Command {
         caseStyle,
       )
 
-      content
-
-      if (fromRegexp) {
+      if (fromRegexp && to) {
         contentWithReplacements = contentWithReplacements.replace(
           new RegExp(...fromRegexp),
           to,
@@ -52,11 +55,14 @@ export default class Create extends Command {
         continue
       }
 
-      if (!from) {
-        throw new Error('key `from` or `fromRegexp` not found.')
+      if (from && to) {
+        contentWithReplacements = contentWithReplacements.replaceAll(from, to)
+        continue
       }
 
-      contentWithReplacements = contentWithReplacements.replaceAll(from, to)
+      log.error(
+        'key `from`, `fromRegexp` or `to` not found in template replace.',
+      )
     }
 
     return contentWithReplacements
@@ -74,11 +80,11 @@ export default class Create extends Command {
       const fileContent = template[pathToWrite]
 
       if (fs.existsSync(pathToWrite)) {
-        throw new Error(`File ${pathToWrite} already exists.`)
+        log.error(`File ${pathToWrite} already exists.`)
       }
 
       if (!/^[\w .-]+$/.test(args.name)) {
-        throw new Error(
+        log.error(
           `File name is invalid (${args.name}). It can only contain letters, digits, underscores, hyphens, periods and spaces.`,
         )
       }
@@ -90,12 +96,16 @@ export default class Create extends Command {
       )
     }
 
+    log.info('Generated files:')
+
     for (const pathToWrite of Object.keys(filesToWrite)) {
       if (!fs.existsSync(path.dirname(pathToWrite))) {
         fs.mkdirSync(path.dirname(pathToWrite), { recursive: true })
       }
 
       fs.writeFileSync(pathToWrite, filesToWrite[pathToWrite])
+
+      log.soft(`${pathToWrite}`)
     }
   }
 }
