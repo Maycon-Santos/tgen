@@ -1,15 +1,15 @@
 {
-  "name": "tgen",
-  "version": "0.0.0",
+  "name": "tpgen",
+  "version": "1.0.0",
   "description": "Generate structure of folders and files from the template defined in the project",
   "author": "Maycon-Santos @Maycon-Santos",
   "bin": {
-    "tgen": "./bin/run"
+    "tpgen": "./bin/run"
   },
-  "homepage": "https://github.com/Maycon-Santos/tgen",
+  "homepage": "https://github.com/Maycon-Santos/tpgen",
   "license": "MIT",
   "main": "dist/index.js",
-  "repository": "Maycon-Santos/tgen",
+  "repository": "Maycon-Santos/tpgen",
   "scripts": {
     "prepare": "husky install",
     "build": "shx rm -rf dist && tsc -b",
@@ -61,8 +61,8 @@
     "typescript": "^4.9.5"
   },
   "oclif": {
-    "bin": "tgen",
-    "dirname": "tgen",
+    "bin": "tpgen",
+    "dirname": "tpgen",
     "commands": "./dist/commands",
     "hooks": {
       "prerun": "./dist/hooks/prerun.js",
@@ -79,7 +79,7 @@
       }
     }
   },
-  "bugs": "https://github.com/Maycon-Santos/tgen/issues",
+  "bugs": "https://github.com/Maycon-Santos/tpgen/issues",
   "keywords": [
     "oclif"
   ],

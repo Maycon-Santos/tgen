@@ -1,13 +1,8 @@
-tgen
-=================
+# tpgen
 
-tgen is a versatile Command Line Interface (CLI) tool that empowers developers to effortlessly generate custom folder and file structures based on their specific requirements. With tgen, you can define a directory structure pattern in the configuration file and swiftly create that layout in your project with a single command.
+tpgen is a versatile Command Line Interface (CLI) tool that empowers developers to effortlessly generate custom folder and file structures based on their specific requirements. With tpgen, you can define a directory structure pattern in the configuration file and swiftly create that layout in your project with a single command.
 
-No more tedious manual setup of repetitive folder structures for various projects. Whether you seek consistency in organizing your team's projects or simply want to expedite your project's initialization, tgen has you covered. Its configuration file enables you to tailor the structure pattern, leaving you more time to focus on your development tasks.
-
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![CircleCI](https://circleci.com/gh/oclif/hello-world/tree/main.svg?style=shield)](https://circleci.com/gh/oclif/hello-world/tree/main)
-[![GitHub license](https://img.shields.io/github/license/oclif/hello-world)](https://github.com/oclif/hello-world/blob/main/LICENSE)
+No more tedious manual setup of repetitive folder structures for various projects. Whether you seek consistency in organizing your team's projects or simply want to expedite your project's initialization, tpgen has you covered. Its configuration file enables you to tailor the structure pattern, leaving you more time to focus on your development tasks.
 
 #### Key Features:
 
@@ -17,87 +12,56 @@ No more tedious manual setup of repetitive folder structures for various project
 - Versatility to support projects of all scales and technologies.
 - Facilitates team collaboration with standardized organization across projects.
 
-# Topics
+[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
+[![CircleCI](https://circleci.com/gh/oclif/hello-world/tree/main.svg?style=shield)](https://circleci.com/gh/oclif/hello-world/tree/main)
+[![GitHub license](https://img.shields.io/github/license/oclif/hello-world)](https://github.com/oclif/hello-world/blob/main/LICENSE)
+
 <!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
+
+- [Usage](#usage)
+- [Commands](#commands)
 <!-- tocstop -->
+
 # Usage
+
 <!-- usage -->
+
 ```sh-session
-$ npm install -g tgen
-$ tgen COMMAND
+$ npm install -g tpgen
+$ tpgen COMMAND
 running command...
-$ tgen (--version)
-tgen/0.0.0 linux-x64 node-v16.20.1
-$ tgen --help [COMMAND]
+$ tpgen (--version)
+tpgen/1.0.0 linux-x64 node-v16.20.1
+$ tpgen --help [COMMAND]
 USAGE
-  $ tgen COMMAND
+  $ tpgen COMMAND
 ...
 ```
+
 <!-- usagestop -->
+
 # Commands
+
 <!-- commands -->
-* [`tgen hello PERSON`](#tgen-hello-person)
-* [`tgen hello world`](#tgen-hello-world)
-* [`tgen help [COMMANDS]`](#tgen-help-commands)
-* [`tgen plugins`](#tgen-plugins)
-* [`tgen plugins:install PLUGIN...`](#tgen-pluginsinstall-plugin)
-* [`tgen plugins:inspect PLUGIN...`](#tgen-pluginsinspect-plugin)
-* [`tgen plugins:install PLUGIN...`](#tgen-pluginsinstall-plugin-1)
-* [`tgen plugins:link PLUGIN`](#tgen-pluginslink-plugin)
-* [`tgen plugins:uninstall PLUGIN...`](#tgen-pluginsuninstall-plugin)
-* [`tgen plugins:uninstall PLUGIN...`](#tgen-pluginsuninstall-plugin-1)
-* [`tgen plugins:uninstall PLUGIN...`](#tgen-pluginsuninstall-plugin-2)
-* [`tgen plugins update`](#tgen-plugins-update)
 
-## `tgen hello PERSON`
+- [`tpgen help [COMMANDS]`](#tpgen-help-commands)
+- [`tpgen plugins`](#tpgen-plugins)
+- [`tpgen plugins:install PLUGIN...`](#tpgen-pluginsinstall-plugin)
+- [`tpgen plugins:inspect PLUGIN...`](#tpgen-pluginsinspect-plugin)
+- [`tpgen plugins:install PLUGIN...`](#tpgen-pluginsinstall-plugin-1)
+- [`tpgen plugins:link PLUGIN`](#tpgen-pluginslink-plugin)
+- [`tpgen plugins:uninstall PLUGIN...`](#tpgen-pluginsuninstall-plugin)
+- [`tpgen plugins:uninstall PLUGIN...`](#tpgen-pluginsuninstall-plugin-1)
+- [`tpgen plugins:uninstall PLUGIN...`](#tpgen-pluginsuninstall-plugin-2)
+- [`tpgen plugins update`](#tpgen-plugins-update)
 
-Say hello
+## `tpgen help [COMMANDS]`
 
-```
-USAGE
-  $ tgen hello PERSON -f <value>
-
-ARGUMENTS
-  PERSON  Person to say hello to
-
-FLAGS
-  -f, --from=<value>  (required) Who is saying hello
-
-DESCRIPTION
-  Say hello
-
-EXAMPLES
-  $ oex hello friend --from oclif
-  hello friend from oclif! (./src/commands/hello/index.ts)
-```
-
-_See code: [dist/commands/hello/index.ts](https://github.com/Maycon-Santos/tgen/blob/v0.0.0/dist/commands/hello/index.ts)_
-
-## `tgen hello world`
-
-Say hello world
+Display help for tpgen.
 
 ```
 USAGE
-  $ tgen hello world
-
-DESCRIPTION
-  Say hello world
-
-EXAMPLES
-  $ tgen hello world
-  hello world! (./src/commands/hello/world.ts)
-```
-
-## `tgen help [COMMANDS]`
-
-Display help for tgen.
-
-```
-USAGE
-  $ tgen help [COMMANDS] [-n]
+  $ tpgen help [COMMANDS] [-n]
 
 ARGUMENTS
   COMMANDS  Command to show help for.
@@ -106,18 +70,18 @@ FLAGS
   -n, --nested-commands  Include all nested commands in the output.
 
 DESCRIPTION
-  Display help for tgen.
+  Display help for tpgen.
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.2.11/src/commands/help.ts)_
 
-## `tgen plugins`
+## `tpgen plugins`
 
 List installed plugins.
 
 ```
 USAGE
-  $ tgen plugins [--core]
+  $ tpgen plugins [--core]
 
 FLAGS
   --core  Show core plugins.
@@ -126,18 +90,18 @@ DESCRIPTION
   List installed plugins.
 
 EXAMPLES
-  $ tgen plugins
+  $ tpgen plugins
 ```
 
 _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.4.7/src/commands/plugins/index.ts)_
 
-## `tgen plugins:install PLUGIN...`
+## `tpgen plugins:install PLUGIN...`
 
 Installs a plugin into the CLI.
 
 ```
 USAGE
-  $ tgen plugins:install PLUGIN...
+  $ tpgen plugins:install PLUGIN...
 
 ARGUMENTS
   PLUGIN  Plugin to install.
@@ -159,23 +123,23 @@ DESCRIPTION
 
 
 ALIASES
-  $ tgen plugins add
+  $ tpgen plugins add
 
 EXAMPLES
-  $ tgen plugins:install myplugin 
+  $ tpgen plugins:install myplugin
 
-  $ tgen plugins:install https://github.com/someuser/someplugin
+  $ tpgen plugins:install https://github.com/someuser/someplugin
 
-  $ tgen plugins:install someuser/someplugin
+  $ tpgen plugins:install someuser/someplugin
 ```
 
-## `tgen plugins:inspect PLUGIN...`
+## `tpgen plugins:inspect PLUGIN...`
 
 Displays installation properties of a plugin.
 
 ```
 USAGE
-  $ tgen plugins:inspect PLUGIN...
+  $ tpgen plugins:inspect PLUGIN...
 
 ARGUMENTS
   PLUGIN  [default: .] Plugin to inspect.
@@ -191,16 +155,16 @@ DESCRIPTION
   Displays installation properties of a plugin.
 
 EXAMPLES
-  $ tgen plugins:inspect myplugin
+  $ tpgen plugins:inspect myplugin
 ```
 
-## `tgen plugins:install PLUGIN...`
+## `tpgen plugins:install PLUGIN...`
 
 Installs a plugin into the CLI.
 
 ```
 USAGE
-  $ tgen plugins:install PLUGIN...
+  $ tpgen plugins:install PLUGIN...
 
 ARGUMENTS
   PLUGIN  Plugin to install.
@@ -222,23 +186,23 @@ DESCRIPTION
 
 
 ALIASES
-  $ tgen plugins add
+  $ tpgen plugins add
 
 EXAMPLES
-  $ tgen plugins:install myplugin 
+  $ tpgen plugins:install myplugin
 
-  $ tgen plugins:install https://github.com/someuser/someplugin
+  $ tpgen plugins:install https://github.com/someuser/someplugin
 
-  $ tgen plugins:install someuser/someplugin
+  $ tpgen plugins:install someuser/someplugin
 ```
 
-## `tgen plugins:link PLUGIN`
+## `tpgen plugins:link PLUGIN`
 
 Links a plugin into the CLI for development.
 
 ```
 USAGE
-  $ tgen plugins:link PLUGIN
+  $ tpgen plugins:link PLUGIN
 
 ARGUMENTS
   PATH  [default: .] path to plugin
@@ -256,16 +220,16 @@ DESCRIPTION
 
 
 EXAMPLES
-  $ tgen plugins:link myplugin
+  $ tpgen plugins:link myplugin
 ```
 
-## `tgen plugins:uninstall PLUGIN...`
+## `tpgen plugins:uninstall PLUGIN...`
 
 Removes a plugin from the CLI.
 
 ```
 USAGE
-  $ tgen plugins:uninstall PLUGIN...
+  $ tpgen plugins:uninstall PLUGIN...
 
 ARGUMENTS
   PLUGIN  plugin to uninstall
@@ -278,17 +242,17 @@ DESCRIPTION
   Removes a plugin from the CLI.
 
 ALIASES
-  $ tgen plugins unlink
-  $ tgen plugins remove
+  $ tpgen plugins unlink
+  $ tpgen plugins remove
 ```
 
-## `tgen plugins:uninstall PLUGIN...`
+## `tpgen plugins:uninstall PLUGIN...`
 
 Removes a plugin from the CLI.
 
 ```
 USAGE
-  $ tgen plugins:uninstall PLUGIN...
+  $ tpgen plugins:uninstall PLUGIN...
 
 ARGUMENTS
   PLUGIN  plugin to uninstall
@@ -301,17 +265,17 @@ DESCRIPTION
   Removes a plugin from the CLI.
 
 ALIASES
-  $ tgen plugins unlink
-  $ tgen plugins remove
+  $ tpgen plugins unlink
+  $ tpgen plugins remove
 ```
 
-## `tgen plugins:uninstall PLUGIN...`
+## `tpgen plugins:uninstall PLUGIN...`
 
 Removes a plugin from the CLI.
 
 ```
 USAGE
-  $ tgen plugins:uninstall PLUGIN...
+  $ tpgen plugins:uninstall PLUGIN...
 
 ARGUMENTS
   PLUGIN  plugin to uninstall
@@ -324,17 +288,17 @@ DESCRIPTION
   Removes a plugin from the CLI.
 
 ALIASES
-  $ tgen plugins unlink
-  $ tgen plugins remove
+  $ tpgen plugins unlink
+  $ tpgen plugins remove
 ```
 
-## `tgen plugins update`
+## `tpgen plugins update`
 
 Update installed plugins.
 
 ```
 USAGE
-  $ tgen plugins update [-h] [-v]
+  $ tpgen plugins update [-h] [-v]
 
 FLAGS
   -h, --help     Show CLI help.
@@ -343,4 +307,5 @@ FLAGS
 DESCRIPTION
   Update installed plugins.
 ```
+
 <!-- commandsstop -->

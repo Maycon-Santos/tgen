@@ -2,7 +2,7 @@ import { expect, test } from '@oclif/test'
 import * as path from 'node:path'
 import * as fs from 'node:fs'
 
-const configPath = path.resolve('test/commands/create/.tgen/.config')
+const configPath = path.resolve('test/commands/create/.tpgen/.config')
 
 describe('create', () => {
   beforeEach(() => {

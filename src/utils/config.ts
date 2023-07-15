@@ -35,7 +35,7 @@ const config: Config = {
 export function loadConfig(configFile?: string): void {
   const configPath = configFile
     ? path.resolve(configFile)
-    : path.resolve(`./.tgen/.config`)
+    : path.resolve(`./.tpgen/.config`)
 
   if (!fs.existsSync(configPath)) {
     log.error(
