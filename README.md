@@ -1,12 +1,23 @@
-oclif-hello-world
+tgen
 =================
 
-oclif example Hello World CLI
+tgen is a versatile Command Line Interface (CLI) tool that empowers developers to effortlessly generate custom folder and file structures based on their specific requirements. With tgen, you can define a directory structure pattern in the configuration file and swiftly create that layout in your project with a single command.
+
+No more tedious manual setup of repetitive folder structures for various projects. Whether you seek consistency in organizing your team's projects or simply want to expedite your project's initialization, tgen has you covered. Its configuration file enables you to tailor the structure pattern, leaving you more time to focus on your development tasks.
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![CircleCI](https://circleci.com/gh/oclif/hello-world/tree/main.svg?style=shield)](https://circleci.com/gh/oclif/hello-world/tree/main)
 [![GitHub license](https://img.shields.io/github/license/oclif/hello-world)](https://github.com/oclif/hello-world/blob/main/LICENSE)
 
+#### Key Features:
+
+- Rapid and automated generation of folder and file structures.
+- Configuration file for customizable structure patterns.
+- Intuitive command-line interface for seamless interactions.
+- Versatility to support projects of all scales and technologies.
+- Facilitates team collaboration with standardized organization across projects.
+
+# Topics
 <!-- toc -->
 * [Usage](#usage)
 * [Commands](#commands)
