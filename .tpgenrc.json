@@ -1,7 +1,7 @@
 {
   "patterns": {
     "test:util": {
-      "dir": "../test/utils",
+      "dir": "test/utils",
       "caseStyle": "kebab",
       "template": "templates/utils",
       "data": {
@@ -12,7 +12,7 @@
       }
     },
     "test:command": {
-      "dir": "../test/commands",
+      "dir": "test/commands",
       "caseStyle": "kebab",
       "template": "templates/test",
       "data": {
