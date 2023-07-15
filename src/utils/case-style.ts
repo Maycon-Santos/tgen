@@ -1,6 +1,10 @@
 export type CaseStyle = 'camel' | 'pascal' | 'kebab' | 'snake'
 
-export function toCaseStyle(value: string, caseStyle: CaseStyle): string {
+export function toCaseStyle(value: string, caseStyle?: CaseStyle): string {
+  if (!caseStyle) {
+    return value
+  }
+
   const fragments = toKebabStyle(value).split('-')
 
   switch (caseStyle) {

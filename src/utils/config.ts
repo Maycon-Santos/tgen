@@ -3,18 +3,21 @@ import fs = require('fs')
 import { CaseStyle } from './case-style'
 import log from './log'
 
+export type Data = {
+  [key: string]: {
+    value?: string
+    description?: string
+    required?: boolean
+    input?: boolean
+    caseStyle?: CaseStyle
+  }
+}
+
 export type Pattern = {
   dir: string
   caseStyle?: CaseStyle
   template: string
-  replace: [
-    {
-      caseStyle?: CaseStyle
-      from?: string
-      fromRegexp?: [string, string]
-      to: string
-    },
-  ]
+  data?: Data
 }
 
 export type Config = {
@@ -29,7 +32,7 @@ const config: Config = {
   patterns: {},
 }
 
-export const loadConfig = (configFile?: string): void => {
+export function loadConfig(configFile?: string): void {
   const configPath = configFile
     ? path.resolve(configFile)
     : path.resolve(`./.tgen/.config`)

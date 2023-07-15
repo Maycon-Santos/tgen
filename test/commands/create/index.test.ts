@@ -13,6 +13,7 @@ describe('create', () => {
 
   test
     .stdout()
+    .env({ Component: 'Test' })
     .command(['create', 'template-1', 'name-test', '--config', configPath])
     .it('generate template-1', () => {
       expect(fs.existsSync(path.resolve('./test/tmp/name-test/name-test.js')))
@@ -31,6 +32,7 @@ describe('create', () => {
 
   test
     .stdout()
+    .env({ Component: 'Test' })
     .command([
       'create',
       'template-1',
@@ -63,6 +65,7 @@ describe('create', () => {
 
   test
     .stdout()
+    .env({ Component: 'Test' })
     .command(['create', 'template-1', 'name-test', '--config', configPath])
     .command(['create', 'template-1', 'name-test', '--config', configPath])
     .catch((error) => {
@@ -73,6 +76,7 @@ describe('create', () => {
 
   test
     .stdout()
+    .env({ Component: 'Test' })
     .command(['create', 'template-1', 'name/@test', '--config', configPath])
     .catch((error) => {
       expect(error.message).to.contain(
@@ -83,22 +87,23 @@ describe('create', () => {
 
   test
     .stdout()
+    .env({ ReplaceThis: '12345678' })
     .command(['create', 'template-2', 'name-test', '--config', configPath])
     .it('should replace text', () => {
       expect(
         fs.readFileSync(path.resolve('./test/tmp/.txt')).toString(),
-      ).contain('NameTestReplaced or regex-replacement and regex-replacement')
+      ).contain(
+        'Mussum Ipsum, cacilds vidis litro abertis. 12345678 Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis!',
+      )
     })
 
   test
     .stdout()
     .command(['create', 'template-3', 'name-test', '--config', configPath])
     .catch((error) => {
-      expect(error.message).to.equal(
-        'key `from`, `fromRegexp` or `to` not found in template replace.',
-      )
+      expect(error.message).to.equal('ReplaceThis is required.')
     })
     .it(
-      'shows an error when trying to generate a file with replace missing key `from`, `fromRegexp` or `to`',
+      'shows an error when trying to generate a file with empty required value',
     )
 })

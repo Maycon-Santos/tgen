@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { Flags, Hook } from '@oclif/core'
 import { loadConfig } from '../utils/config'
 

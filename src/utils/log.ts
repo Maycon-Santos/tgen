@@ -17,7 +17,7 @@ const log = {
   },
 }
 
-function colorize(color: number, output: string): string {
+export function colorize(color: number, output: string): string {
   return `\u001B[${color}m${output}\u001B[0m`
 }
 

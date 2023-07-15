@@ -5,6 +5,7 @@
     "prettier"
   ],
   "rules": {
-    "no-console": "error"
+    "no-console": "error",
+    "no-await-in-loop": "off"
   }
 }

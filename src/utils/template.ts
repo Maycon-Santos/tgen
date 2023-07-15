@@ -1,20 +1,24 @@
 import fs = require('fs')
 import path = require('path')
-import { Pattern } from './config'
-import { toCaseStyle } from './case-style'
+import Mustache = require('mustache')
+import type { OpeningAndClosingTags } from 'mustache'
+import config, { Pattern } from './config'
+import { parseData } from './data'
 
 export type Template = {
   [filename: string]: string
 }
 
-const loadTemplate = (
+export const tags: OpeningAndClosingTags = ['_', '_']
+
+async function parseTemplate(
   pattern: Pattern,
   name: string,
-  rootDir?: string,
   dir?: string,
-): Template => {
+): Promise<Template> {
   const template: Template = {}
   const templateDir = pattern.template
+  const data = await parseData(pattern, { name }, tags)
 
   function run(currentDir: string) {
     const files = fs.readdirSync(currentDir)
@@ -28,37 +32,38 @@ const loadTemplate = (
         continue
       }
 
-      const replaceNameFrom = '[name]'
-      const replaceNameTo = pattern.caseStyle
-        ? toCaseStyle(path.basename(name), pattern.caseStyle)
-        : path.basename(name)
-
-      const fileContentWithReplacements = filePath
-        .replace(templateDir, '')
-        .replaceAll(replaceNameFrom, replaceNameTo)
-
       const fileContent = fs.readFileSync(filePath)
-      template[fileContentWithReplacements] = fileContent.toString()
+
+      const templateKey = Mustache.render(
+        filePath.replace(templateDir, ''),
+        data,
+        {},
+        { tags },
+      )
+
+      const templateContent = Mustache.render(
+        fileContent.toString(),
+        data,
+        {},
+        { tags },
+      )
+
+      template[templateKey] = templateContent
     }
   }
 
   run(templateDir)
 
-  return resolvePath(template, pattern, rootDir, dir)
+  return resolvePath(template, pattern, dir)
 }
 
-function resolvePath(
-  template: Template,
-  pattern: Pattern,
-  rootDir?: string,
-  dir?: string,
-) {
+function resolvePath(template: Template, pattern: Pattern, dir?: string) {
   const templateEntries = Object.entries(template)
 
   return Object.fromEntries(
     templateEntries.map(([filename, fileContent]) => {
       const pathToWrite = path.resolve(
-        path.join(rootDir || '', pattern.dir, dir || '', filename),
+        path.join(config.root || '', pattern.dir, dir || '', filename),
       )
 
       return [pathToWrite, fileContent]
@@ -66,4 +71,4 @@ function resolvePath(
   )
 }
 
-export default loadTemplate
+export default parseTemplate
