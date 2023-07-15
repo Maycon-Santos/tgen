@@ -18,6 +18,7 @@ No more tedious manual setup of repetitive folder structures for various project
 
 <!-- toc -->
 
+- [tpgen](#tpgen)
 - [Usage](#usage)
 - [Commands](#commands)
 <!-- tocstop -->
