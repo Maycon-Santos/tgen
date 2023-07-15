@@ -32,7 +32,7 @@ $ npm install -g tpgen
 $ tpgen COMMAND
 running command...
 $ tpgen (--version)
-tpgen/1.0.0 linux-x64 node-v16.20.1
+tpgen/1.0.1 linux-x64 node-v16.20.1
 $ tpgen --help [COMMAND]
 USAGE
   $ tpgen COMMAND
