@@ -32,7 +32,7 @@ $ npm install -g tpgen
 $ tpgen COMMAND
 running command...
 $ tpgen (--version)
-tpgen/1.0.1 linux-x64 node-v16.20.1
+tpgen/1.0.2 linux-x64 node-v16.20.1
 $ tpgen --help [COMMAND]
 USAGE
   $ tpgen COMMAND
@@ -45,6 +45,7 @@ USAGE
 
 <!-- commands -->
 
+- [`tpgen create PATTERN NAME`](#tpgen-create-pattern-name)
 - [`tpgen help [COMMANDS]`](#tpgen-help-commands)
 - [`tpgen plugins`](#tpgen-plugins)
 - [`tpgen plugins:install PLUGIN...`](#tpgen-pluginsinstall-plugin)
@@ -55,6 +56,23 @@ USAGE
 - [`tpgen plugins:uninstall PLUGIN...`](#tpgen-pluginsuninstall-plugin-1)
 - [`tpgen plugins:uninstall PLUGIN...`](#tpgen-pluginsuninstall-plugin-2)
 - [`tpgen plugins update`](#tpgen-plugins-update)
+
+## `tpgen create PATTERN NAME`
+
+```
+USAGE
+  $ tpgen create PATTERN NAME [-d <value>]
+
+ARGUMENTS
+  PATTERN
+  NAME     Name of the files to be generated.
+
+FLAGS
+  -d, --dir=<value>  Directory where the pattern will be inserted. The default is the root defined in the configuration
+                     file.
+```
+
+_See code: [dist/commands/create.ts](https://github.com/Maycon-Santos/tpgen/blob/v1.0.2/dist/commands/create.ts)_
 
 ## `tpgen help [COMMANDS]`
 

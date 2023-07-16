@@ -1,6 +1,6 @@
 {
   "name": "tpgen",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Generate structure of folders and files from the template defined in the project",
   "author": "Maycon-Santos @Maycon-Santos",
   "bin": {
