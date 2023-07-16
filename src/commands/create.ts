@@ -1,10 +1,10 @@
 import path = require('path')
 import fs = require('fs')
 import { Args, Command, Flags } from '@oclif/core'
-import config from '../../utils/config'
-import parseTemplate from '../../utils/template'
-import { toCaseStyle } from '../../utils/case-style'
-import log from '../../utils/log'
+import config from '../utils/config'
+import parseTemplate from '../utils/template'
+import { toCaseStyle } from '../utils/case-style'
+import log from '../utils/log'
 
 export default class Create extends Command {
   static flags = {
