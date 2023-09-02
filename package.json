@@ -39,7 +39,7 @@
     "prettier": "^3.0.0"
   },
   "devDependencies": {
-    "@oclif/test": "^2.3.26",
+    "@oclif/test": "^2.5.1",
     "@types/chai": "^4",
     "@types/mocha": "^9.0.0",
     "@types/mustache": "^4.2.2",
